@@ -2,9 +2,9 @@
 #include <iostream>
 using namespace std;
 
-AdjacencyList::AdjacencyList(int numberVertexes, int sizeExpected, bool direction) {
+AdjacencyList::AdjacencyList(int numberVertexes, int sizeExpected, bool isDirected) {
     nV = numberVertexes;
-    directed = direction;
+    directed = isDirected;
     used = 0;
 
     if(directed)
@@ -27,7 +27,7 @@ AdjacencyList::~AdjacencyList(){
 }
 
 void AdjacencyList::addEdge(int u, int v, int w) {
-    edges[used].leadTo = v;
+    edges[used].destination = v;
     edges[used].weight = w;
     nextNeighbour[used] = head[u]; //remember existing neighbour = -1 - no neighbour
     head[u] = used;                //where to look, new link is the first now
@@ -40,7 +40,7 @@ void AdjacencyList::print() const{
         int i = head[v];
         while(i != -1){
             cout << "("
-            << edges[i].leadTo << ", "
+                 << edges[i].destination << ", "
             << edges[i].weight << ") ";
             i = nextNeighbour[i];
         }

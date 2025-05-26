@@ -2,7 +2,7 @@
 #define AIZO_GRAFS_ADJACENCYLIST_H
 
 struct Edge{
-    int leadTo; // where the edge leads to
+    int destination; // where the edge leads to
     int weight;
     int nextEdges; // i of the next edge from the same vertex
 };
@@ -18,7 +18,7 @@ public:
     Edge* edges;
     int* nextNeighbour;
 
-    AdjacencyList(int numberVertexes, int sizeExpected, bool direction);
+    AdjacencyList(int numberVertexes, int sizeExpected, bool isDirected);
 
     ~AdjacencyList();
 
