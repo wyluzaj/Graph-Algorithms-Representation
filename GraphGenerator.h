@@ -1,6 +1,7 @@
 #ifndef AIZO_GRAFS_GRAPHGENERATOR_H
 #define AIZO_GRAFS_GRAPHGENERATOR_H
 #include "AdjacencyList.h"
+#include "IncidenceMatrix.h"
 #include <random>
 
 class GraphGenerator {
@@ -15,8 +16,8 @@ public:
 
     GraphGenerator(int vertexCount);
 
-    void makeGraph(AdjacencyList& graph, int m, bool directed);
-
+    void makeAdjacencyList(AdjacencyList& graph, int m, bool directed);
+    void makeIncidenceMatrix(IncidenceMatrix& matrix, int m, bool directed);
 };
 
 #endif //AIZO_GRAFS_GRAPHGENERATOR_H

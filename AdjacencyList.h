@@ -17,7 +17,7 @@ public:
     Edge* edges;
     int* nextNeighbour;
 
-    AdjacencyList(int numberVertexes, int sizeExpected, bool isDirected);
+    AdjacencyList(int Vertexes, int Edges, bool isDirected);
 
     ~AdjacencyList();
 

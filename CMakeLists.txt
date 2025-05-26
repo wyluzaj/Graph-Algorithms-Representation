@@ -7,4 +7,6 @@ add_executable(AIZO_grafs main.cpp
         AdjacencyList.h
         AdjacencyList.cpp
         GraphGenerator.h
-        GraphGenerator.cpp)
+        GraphGenerator.cpp
+        IncidenceMatrix.h
+        IncidenceMatrix.cpp)

@@ -1,4 +1,5 @@
 #include "GraphGenerator.h"
+#include "IncidenceMatrix.h"
 #include <algorithm>
 
 GraphGenerator::GraphGenerator(int vertexCount) {
@@ -16,10 +17,11 @@ void GraphGenerator::shuffle(int *arr, int size) {
         std::swap(arr[i], arr[j]);
     }
 }
-void GraphGenerator::makeGraph(AdjacencyList& graph, int m, bool directed) {
+void GraphGenerator::makeAdjacencyList(AdjacencyList& graph, int m, bool directed) {
+
     int n      = graph.nV;
     int mMin   = n - 1;
-    int mMax   = directed;
+    int mMax   ;
 
     //max number of edges
     if(directed)
@@ -43,10 +45,11 @@ void GraphGenerator::makeGraph(AdjacencyList& graph, int m, bool directed) {
         int v = perm[i + 1];
         int w = weightDist(rng);
         graph.addEdge(u, v, w);
-        if (!directed) // if notdirected add another edge
+        if (!directed) // only in undirected
             graph.addEdge(v, u, w);
 
-        used[u * n + v] = true;
+        used[u * n + v] = true; // element[row][col]  ≡  flat[row * number of col + col]
+
         if (!directed)
             used[v * n + u] = true;
     }
@@ -75,4 +78,56 @@ void GraphGenerator::makeGraph(AdjacencyList& graph, int m, bool directed) {
     delete[] used;
     delete[] perm;
 }
+
+
+void GraphGenerator::makeIncidenceMatrix(IncidenceMatrix& matrix, int m, bool directed){
+
+    int n      = matrix.nV;
+    int mMin   = n - 1;
+    int mMax   ;
+
+    //max number of edges
+    if(directed)
+        mMax = n * (n-1); //directed graph
+    else
+        mMax = n * (n-1) /2; //undirected graph
+
+    if (m < mMin || m > mMax){
+        return; //empty graph
+    }
+
+    bool* used = new bool[n * n];
+    for (int i = 0; i < n * n; ++i) used[i] = false;
+
+    //spanning tree
+    int* perm = new int[n];
+    shuffle(perm, n);
+
+    for (int i = 0; i < n - 1; ++i) {
+        int u = perm[i];
+        int v = perm[i + 1];
+        int w = weightDist(rng);
+        matrix.addEdge(u, v, w);
+        used[u * n + v] = true;
+
+        if (!directed)
+            used[v * n + u] = true;
+    }
+
+    int added = n - 1;
+    while (added < m) {
+        int u = vertexDist(rng), v = vertexDist(rng);
+        if (u == v || used[u * n + v] || (!directed && used[v * n + u]))
+            continue;
+        int w = weightDist(rng);
+        matrix.addEdge(u, v, w);
+        used[u * n + v] = true;
+        if (!directed) used[v * n + u] = true;
+        ++added;
+    }
+
+    delete[] used;
+    delete[] perm;
+}
+
 

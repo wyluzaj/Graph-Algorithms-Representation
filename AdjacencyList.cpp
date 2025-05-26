@@ -2,15 +2,15 @@
 #include <iostream>
 using namespace std;
 
-AdjacencyList::AdjacencyList(int numberVertexes, int sizeExpected, bool isDirected) {
-    nV = numberVertexes;
+AdjacencyList::AdjacencyList(int Vertexes, int Edges, bool isDirected) {
+    nV = Vertexes;
     directed = isDirected;
     used = 0;
 
     if(directed)
-        size = sizeExpected;
+        size = Edges;
     else
-        size = 2 * sizeExpected;
+        size = 2 * Edges;
     
     head = new int[nV];
     edges = new Edge[size];
@@ -27,6 +27,7 @@ AdjacencyList::~AdjacencyList(){
 }
 
 void AdjacencyList::addEdge(int u, int v, int w) {
+    if (used >= size) return; // try too not overbook
     edges[used].destination = v;
     edges[used].weight = w;
     nextNeighbour[used] = head[u]; //remember existing neighbour = -1 - no neighbour
