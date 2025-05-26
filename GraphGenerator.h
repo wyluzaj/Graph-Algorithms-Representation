@@ -1,0 +1,7 @@
+#ifndef AIZO_GRAFS_GRAPHGENERATOR_H
+#define AIZO_GRAFS_GRAPHGENERATOR_H
+#include "AdjacencyList.h"
+
+
+
+#endif //AIZO_GRAFS_GRAPHGENERATOR_H
