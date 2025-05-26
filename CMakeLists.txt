@@ -9,4 +9,6 @@ add_executable(AIZO_grafs main.cpp
         GraphGenerator.h
         GraphGenerator.cpp
         IncidenceMatrix.h
-        IncidenceMatrix.cpp)
+        IncidenceMatrix.cpp
+        Timer.cpp
+        Timer.h)
