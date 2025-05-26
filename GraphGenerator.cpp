@@ -16,9 +16,10 @@ void GraphGenerator::shuffle(int *arr, int size) {
         std::swap(arr[i], arr[j]);
     }
 }
-AdjacencyList GraphGenerator::makeGraph(int n, int m, bool directed) {
-    int mMin = n -1;
-    int mMax;
+void GraphGenerator::makeGraph(AdjacencyList& graph, int m, bool directed) {
+    int n      = graph.nV;
+    int mMin   = n - 1;
+    int mMax   = directed;
 
     //max number of edges
     if(directed)
@@ -26,11 +27,9 @@ AdjacencyList GraphGenerator::makeGraph(int n, int m, bool directed) {
     else
         mMax = n * (n-1) /2; //undirected graph
 
-    if(m<mMin || m > mMax) //if number of edges is wrong return empty graph
-        return AdjacencyList(n, 0, directed);
-
-    AdjacencyList Graph(n, m, directed);
-
+   if (m < mMin || m > mMax){
+       return; //empty graph
+   }
     bool* used = new bool[n * n]; //table for existing edges
     for (int i = 0; i < n * n; ++i)
         used[i] = false;
@@ -43,9 +42,9 @@ AdjacencyList GraphGenerator::makeGraph(int n, int m, bool directed) {
         int u = perm[i];
         int v = perm[i + 1];
         int w = weightDist(rng);
-        Graph.addEdge(u, v, w);
+        graph.addEdge(u, v, w);
         if (!directed) // if notdirected add another edge
-            Graph.addEdge(v, u, w);
+            graph.addEdge(v, u, w);
 
         used[u * n + v] = true;
         if (!directed)
@@ -63,11 +62,11 @@ AdjacencyList GraphGenerator::makeGraph(int n, int m, bool directed) {
 
         int w = weightDist(rng);
 
-        Graph.addEdge(u, v, w);
+        graph.addEdge(u, v, w);
         used[u * n + v] = true;
 
         if (!directed) {
-            Graph.addEdge(v, u, w);
+            graph.addEdge(v, u, w);
             used[v * n + u] = true;
         }
 
@@ -75,6 +74,5 @@ AdjacencyList GraphGenerator::makeGraph(int n, int m, bool directed) {
     }
     delete[] used;
     delete[] perm;
-    return Graph;
 }
 

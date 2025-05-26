@@ -15,7 +15,7 @@ public:
 
     GraphGenerator(int vertexCount);
 
-    AdjacencyList makeGraph(int n, int m, bool directed);
+    void makeGraph(AdjacencyList& graph, int m, bool directed);
 
 };
 

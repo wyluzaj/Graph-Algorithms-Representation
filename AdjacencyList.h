@@ -4,7 +4,6 @@
 struct Edge{
     int destination; // where the edge leads to
     int weight;
-    int nextEdges; // i of the next edge from the same vertex
 };
 
 class AdjacencyList{
