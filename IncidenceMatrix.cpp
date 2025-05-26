@@ -1,4 +1,4 @@
-#include "IncidenceMatrix.h"
+#include "include/IncidenceMatrix.h"
 #include <iostream>
 using namespace std;
 

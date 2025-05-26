@@ -1,10 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "AdjacencyList.h"
-#include "IncidenceMatrix.h"
-#include "GraphGenerator.h"
-#include "DataReader.h"
+#include "include/AdjacencyList.h"
+#include "include/IncidenceMatrix.h"
+#include "include/GraphGenerator.h"
+#include "include/DataReader.h"
 
 int main() {
     using namespace std;

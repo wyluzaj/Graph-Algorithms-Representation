@@ -1,5 +1,5 @@
-#include "GraphGenerator.h"
-#include "IncidenceMatrix.h"
+#include "include/GraphGenerator.h"
+#include "include/IncidenceMatrix.h"
 #include <algorithm>
 
 GraphGenerator::GraphGenerator(int vertexCount) {

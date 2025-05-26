@@ -4,13 +4,13 @@ project(AIZO_grafs)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(AIZO_grafs main.cpp
-        AdjacencyList.h
+        include/AdjacencyList.h
         AdjacencyList.cpp
-        GraphGenerator.h
+        include/GraphGenerator.h
         GraphGenerator.cpp
-        IncidenceMatrix.h
+        include/IncidenceMatrix.h
         IncidenceMatrix.cpp
         Timer.cpp
-        Timer.h
-        DataReader.h
+        include/Timer.h
+        include/DataReader.h
 )
