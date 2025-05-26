@@ -11,4 +11,6 @@ add_executable(AIZO_grafs main.cpp
         IncidenceMatrix.h
         IncidenceMatrix.cpp
         Timer.cpp
-        Timer.h)
+        Timer.h
+        DataReader.h
+)

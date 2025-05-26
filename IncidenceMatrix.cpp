@@ -42,7 +42,7 @@ void IncidenceMatrix::addEdge(int u, int v, int w) {
 void IncidenceMatrix::print() const {
     for (int i = 0; i < nV; ++i) {
         for (int j = 0; j < used; ++j) {
-            cout << matrix[i * mE + j] << " ";
+            cout << matrix[i * mE + j] << "     ";
         }
         cout << std::endl;
     }
