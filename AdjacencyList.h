@@ -14,7 +14,7 @@ public:
     bool directed;
 
     int* head; //start point
-    Edge* edges;
+    Edge* edges; // egde(dest, weight)
     int* nextNeighbour;
 
     AdjacencyList(int Vertexes, int Edges, bool isDirected);

@@ -3,6 +3,7 @@
 using namespace std;
 
 AdjacencyList::AdjacencyList(int Vertexes, int Edges, bool isDirected) {
+
     nV = Vertexes;
     directed = isDirected;
     used = 0;
@@ -30,7 +31,7 @@ void AdjacencyList::addEdge(int u, int v, int w) {
     if (used >= size) return; // try too not overbook
     edges[used].destination = v;
     edges[used].weight = w;
-    nextNeighbour[used] = head[u]; //remember existing neighbour = -1 - no neighbour
+    nextNeighbour[used] = head[u]; //head = i of the nei. remember existing neighbour = -1 - no neighbour
     head[u] = used;                //where to look, new link is the first now
     used++;
 }
