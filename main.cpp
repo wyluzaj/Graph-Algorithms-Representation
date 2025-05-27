@@ -10,9 +10,9 @@ int main() {
     using namespace std;
 
     int mode;
-    cout << "Choose:\n"
-         << " 1  read from file\n"
-         << " 2  generate random\n> ";
+    cout << " 1  read from file\n"
+         << " 2  generate random\n";
+    cout << "Choose: ";
     cin >> mode;
 
     if (mode == 1) {
