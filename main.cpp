@@ -27,13 +27,26 @@ int main() {
             return -1;
         }
 
-        int n, m;
-        file >> m >> n;
+        int vert, edg;
+        file >> edg >> vert;
         file.close();
 
-        bool directed = false;
-        AdjacencyList list(n, m, directed);
-        IncidenceMatrix mat(n, m, directed);
+        bool directed = true; //which graf do you have in your file
+
+        //checck edges
+        int minEdges;
+        if (directed) {
+            minEdges = 2 * (vert - 1);
+        } else {
+            minEdges = vert - 1;
+        }
+        if (edg < minEdges) {
+            cerr << "Min number of edges for direkted graph: 2(vert-1)\n"
+                  <<"Min number of edges for undirekted graph: (vert-1)";
+            return 1;
+        }
+        AdjacencyList list(vert, edg, directed);
+        IncidenceMatrix mat(vert, edg, directed);
 
         DataReader<AdjacencyList> rdrList;
         if (!rdrList.readFromFile(filename, list)) return -1;
@@ -49,23 +62,35 @@ int main() {
     }
     else if (mode == 2) {
 
-        int vertexes;
-        int edges;
+        int vert;
+        int edg;
         bool directed;
         cout << "Vertexes: ";
-        cin >> vertexes;
+        cin >> vert;
         cout << "Edges: ";
-        cin >> edges;
+        cin >> edg;
         cout << "Which (1 dir, 0 undir): ";
         cin >> directed;
 
-        GraphGenerator generator(vertexes);
+        int minEdges;
+        if (directed) {
+            minEdges = 2 * (vert - 1);
+        } else {
+            minEdges = vert - 1;
+        }
+        if (edg < minEdges) {
+            cerr << "Min number of edges for direkted graph: 2(vert-1)\n"
+                 <<"Min number of edges for undirekted graph: (vert-1)";
+            return 1;
+        }
 
-        AdjacencyList list(vertexes, edges, directed);
-        IncidenceMatrix mat(vertexes, edges, directed);
+        GraphGenerator generator(vert);
 
-        generator.makeAdjacencyList(list, edges, directed);
-        generator.makeIncidenceMatrix(mat, edges, directed);
+        AdjacencyList list(vert, edg, directed);
+        IncidenceMatrix mat(vert, edg, directed);
+
+        generator.makeAdjacencyList(list, edg, directed);
+        generator.makeIncidenceMatrix(mat, edg, directed);
 
         cout << "\nAdjacency List:\n";
         list.print();
