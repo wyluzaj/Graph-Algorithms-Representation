@@ -57,23 +57,24 @@ void GraphGenerator::makeAdjacencyList(AdjacencyList& list, int m, bool directed
     int added;
 
     if (directed){ //build v1->v2->v3 from root to another vertexes
-        for(int i = 1; i<n;i++){
-            int parentIndex = randInt(rng, i-1);
-            int u = perm[parentIndex];
-            int v = perm[i];
+        for (int i = 1; i < n; ++i) {
+            int parent = perm[i - 1];
+            int child = perm[i];
             int w = weightDist(rng);
-            list.addEdge(u, v, w);
-            used[u*n + v] = true;
+            list.addEdge(parent, child, w);
+            used[parent * n + child] = true;
+            ++added;
         }
-        for (int i = 1; i < n; ++i) { //build from vertexes to root
-            int parentIndex = randInt(rng, i-1);
-            int u = perm[i];
-            int v = perm[parentIndex];
-            int w = weightDist(rng);
-            list.addEdge(u, v, w);
-            used[u*n + v] = true;
+        for (int i = 1; i < n; ++i) {
+            int child = perm[i];
+            int parent = perm[i - 1];
+            if (!used[child * n + parent]) {
+                int w = weightDist(rng);
+                list.addEdge(child, parent, w);
+                used[child * n + parent] = true;
+                ++added;
+            }
         }
-        added = 2 * (n-1);
 
     } else{
         for (int i = 0; i < n - 1; ++i) {
@@ -84,8 +85,8 @@ void GraphGenerator::makeAdjacencyList(AdjacencyList& list, int m, bool directed
             list.addEdge(v, u, w);
             used[u * n + v] = true;
             used[v * n + u] = true;
+            ++added;
         }
-        added = n - 1;
     }
 
     while (added < m) {
@@ -147,23 +148,24 @@ void GraphGenerator::makeIncidenceMatrix(IncidenceMatrix& matrix, int m, bool di
     int added;
 
     if (directed){ //build v1->v2->v3 from root to another vertexes
-        for(int i = 1; i<n;i++){
-            int parentIndex = randInt(rng, i-1);
-            int u = perm[parentIndex];
-            int v = perm[i];
+        for (int i = 1; i < n; ++i) {
+            int parent = perm[i - 1];
+            int child = perm[i];
             int w = weightDist(rng);
-            matrix.addEdge(u, v, w);
-            used[u*n + v] = true;
+            matrix.addEdge(parent, child, w);
+            used[parent * n + child] = true;
+            ++added;
         }
-        for (int i = 1; i < n; ++i) { //build from vertexes to root
-            int parentIndex = randInt(rng, i-1);
-            int u = perm[i];
-            int v = perm[parentIndex];
-            int w = weightDist(rng);
-            matrix.addEdge(u, v, w);
-            used[u*n + v] = true;
+        for (int i = 1; i < n; ++i) {
+            int child = perm[i];
+            int parent = perm[i - 1];
+            if (!used[child * n + parent]) {
+                int w = weightDist(rng);
+                matrix.addEdge(child, parent, w);
+                used[child * n + parent] = true;
+                ++added;
+            }
         }
-        added = 2 * (n-1);
 
     } else{
         for (int i = 0; i < n - 1; ++i) {
