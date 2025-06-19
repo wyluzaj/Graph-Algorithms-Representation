@@ -4,6 +4,7 @@
 struct Edge{
     int destination; // where the edge leads to
     int weight;
+    int source;
 };
 
 class AdjacencyList{
@@ -13,9 +14,11 @@ public:
     int used; //how many is in edges[]
     bool directed;
 
-    int* head; //start point
+    int* headSucc; //start point
+    int* headPred;
     Edge* edges; // egde(dest, weight)
-    int* nextNeighbour;
+    int* nextSucc;
+    int* nextPred;
 
     AdjacencyList(int Vertexes, int Edges, bool isDirected);
 
