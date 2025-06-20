@@ -1,4 +1,4 @@
-#include "include/KruskalAlg.h"
+#include "../../include/algorithms/KruskalAlg.h"
 
 KruskalAlg::KruskalAlg(const GraphReader &reader) {
     graph = &reader;

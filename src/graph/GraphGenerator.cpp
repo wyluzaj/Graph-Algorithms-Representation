@@ -1,6 +1,4 @@
-#include "include/GraphGenerator.h"
-#include "include/IncidenceMatrix.h"
-#include "include/AdjacencyList.h"
+#include "../../include/graph/GraphGenerator.h"
 #include <algorithm>
 #include <random>
 
@@ -54,7 +52,7 @@ void GraphGenerator::makeAdjacencyList(AdjacencyList& list, int m, bool directed
 
     int* perm = new int[n];
     shuffle(perm, n);
-    int added;
+    int added = 0;
 
     if (directed){ //build v1->v2->v3 from root to another vertexes
         for (int i = 1; i < n; ++i) {
@@ -145,7 +143,7 @@ void GraphGenerator::makeIncidenceMatrix(IncidenceMatrix& matrix, int m, bool di
     int* perm = new int[n];
     shuffle(perm, n);
 
-    int added;
+    int added = 0;
 
     if (directed){ //build v1->v2->v3 from root to another vertexes
         for (int i = 1; i < n; ++i) {
@@ -173,11 +171,10 @@ void GraphGenerator::makeIncidenceMatrix(IncidenceMatrix& matrix, int m, bool di
             int v = perm[i + 1];
             int w = weightDist(rng);
             matrix.addEdge(u, v, w);
-            matrix.addEdge(v, u, w);
             used[u * n + v] = true;
             used[v * n + u] = true;
+            ++added;
         }
-        added = n - 1;
     }
 
     while (added < m) {

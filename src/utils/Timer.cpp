@@ -1,4 +1,4 @@
-#include "include/Timer.h"
+#include "../../include/utils/Timer.h"
 
 Timer::Timer() = default;
 
@@ -18,6 +18,6 @@ int Timer::stop() {
 }
 
 int Timer::result() {
-    std::chrono::duration elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime);
+    std::chrono::duration elapsed = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime);
     return static_cast<int>(elapsed.count());
 }

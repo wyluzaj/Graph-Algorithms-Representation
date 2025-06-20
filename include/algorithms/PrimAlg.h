@@ -1,8 +1,8 @@
 #ifndef AIZO_GRAFS_PRIMALG_H
 #define AIZO_GRAFS_PRIMALG_H
 
-#include "GraphReader.h"
-#include "MinHeap.h"
+#include "../graph/GraphReader.h"
+#include "../utils/MinHeap.h"
 
 //Prim (MST)
 class PrimAlgorithm {

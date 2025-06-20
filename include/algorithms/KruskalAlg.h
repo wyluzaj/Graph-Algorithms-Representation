@@ -1,8 +1,8 @@
 #ifndef AIZO_GRAFS_KRUSKALALG_H
 #define AIZO_GRAFS_KRUSKALALG_H
 
-#include "GraphReader.h"
-#include "MinHeap.h"
+#include "../graph/GraphReader.h"
+#include "../utils/MinHeap.h"
 
 //class for MST tree to build with Krusklas' alg
 class KruskalAlg {

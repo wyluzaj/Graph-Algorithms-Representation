@@ -1,4 +1,4 @@
-#include "include/CheckGraph.h"
+#include "../../include/graph/CheckGraph.h"
 
 
 bool CheckGraph::verify(const AdjacencyList &list, int expectedM) {

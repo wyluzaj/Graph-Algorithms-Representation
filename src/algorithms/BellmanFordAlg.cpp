@@ -1,4 +1,4 @@
-#include "include/BellmanFordAlg.h"
+#include "../../include/algorithms/BellmanFordAlg.h"
 #include <climits>
 
 BellmanFordAlg::BellmanFordAlg(const GraphReader &reader) {

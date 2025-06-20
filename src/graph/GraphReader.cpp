@@ -1,4 +1,4 @@
-#include "include/GraphReader.h"
+#include "../../include/graph/GraphReader.h"
 #include <cmath>
 
 
@@ -66,30 +66,25 @@ void GraphReader::getNeighbor(int u, int idx, int &v, int &w) const {
         const IncidenceMatrix &g = *matG;
         int seen = 0;
         for (int col = 0; col < g.used; col++) {
-            int val = g.matrix[u * g.mE + col];
-            bool isOutgoing;
             if (g.directed) {
-                isOutgoing = (val > 0);
+                // only ++ edges
+                if (g.matrix[u * g.mE + col] <= 0) continue;
             } else {
-                isOutgoing = (val != 0);
+                // undir
+                if (g.matrix[u * g.mE + col] == 0) continue;
             }
 
-            if (!isOutgoing) continue;
-
-            if (seen == idx) {
-                w = std::abs(val);
-                for (int row = 0; row < g.nV; row++) {
-                    if (row != u) {
-                        int cell = g.matrix[row * g.mE + col];
-                        if ((g.directed && cell < 0) || (!g.directed && cell != 0)) {
-                            v = row;
-                            return;
-                        }
+            for (int row = 0; row < g.nV; row++) {
+                if (row != u && g.matrix[row * g.mE + col] != 0) {
+                    if (seen == idx) {
+                        v = row;
+                        w = std::abs(g.matrix[u * g.mE + col]);
+                        return;
                     }
+                    ++seen;
+                    break;
                 }
-                return;
             }
-            seen++;
         }
     }
 }

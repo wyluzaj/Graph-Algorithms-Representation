@@ -1,4 +1,4 @@
-#include "include/IncidenceMatrix.h"
+#include "../../include/graph/IncidenceMatrix.h"
 #include <iostream>
 using namespace std;
 

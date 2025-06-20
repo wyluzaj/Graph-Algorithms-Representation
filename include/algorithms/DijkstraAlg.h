@@ -1,8 +1,8 @@
 #ifndef AIZO_GRAFS_DIJKSTRAALG_H
 #define AIZO_GRAFS_DIJKSTRAALG_H
 
-#include "GraphReader.h"
-#include "MinHeap.h"
+#include "../graph/GraphReader.h"
+#include "../utils/MinHeap.h"
 
 //Dijkstra's algorithm using a MinHeap
 class DijkstraAlg {

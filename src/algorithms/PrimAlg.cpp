@@ -1,4 +1,4 @@
-#include "include/PrimAlg.h"
+#include "../../include/algorithms/PrimAlg.h"
 
 
 

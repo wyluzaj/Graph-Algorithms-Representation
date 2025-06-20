@@ -1,4 +1,4 @@
-#include "include/DijkstraAlg.h"
+#include "../../include/algorithms/DijkstraAlg.h"
 #include <climits>
 
 DijkstraAlg::DijkstraAlg(const GraphReader &adapter) {

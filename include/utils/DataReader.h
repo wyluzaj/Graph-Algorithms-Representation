@@ -3,8 +3,8 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "AdjacencyList.h"
-#include "IncidenceMatrix.h"
+#include "../graph/AdjacencyList.h"
+#include "../graph/IncidenceMatrix.h"
 
 template<typename Graph>
 class DataReader {

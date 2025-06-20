@@ -1,7 +1,7 @@
 #ifndef AIZO_GRAFS_BELLMANFORDALG_H
 #define AIZO_GRAFS_BELLMANFORDALG_H
 
-#include "GraphReader.h"
+#include "../graph/GraphReader.h"
 
 
 //class for shortest path using Bellman-Ford algorithm without - cykles
