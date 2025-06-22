@@ -25,7 +25,7 @@ FILE TEST MODE:
     <problem>    Problem to solve (e.g. 0 - MST, 1 - shortest path)
     <algorithm>  Algorithm for the problem:
                    For MST:      0 - all, 1 - Prim, 2 - Kruskal
-                   For shortest: 0 - all, 1 - Dijkstra, 2 - Bellman–Ford
+                   For shortest: 0 - all, 1 - Dijkstra, 2 - Bellman Ford
     <inputFile>  Input file containing the graph.
     [outputFile] Optional. If provided, solved problem will be stored there.
 
@@ -34,7 +34,7 @@ BENCHMARK MODE:
     <problem>    Problem to solve (e.g. 0 - MST, 1 - shortest path)
     <algorithm>  Algorithm for the problem:
                    For MST:      0 - all, 1 - Prim, 2 - Kruskal
-                   For shortest: 0 - all, 1 - Dijkstra, 2 - Bellman–Ford
+                   For shortest: 0 - all, 1 - Dijkstra, 2 - Bellman Ford
     <size>       Number of nodes in the generated graph.
     <density>    Edge density 10/20.. for example.
     <count>      How many times test should be repeated.
@@ -46,19 +46,19 @@ HELP MODE:
 )" << std::endl;
 }
 
-void printPath(int dst, const int* parent) {
+void printPath(int dst, const int* parent, std::ostream& os) {
     if (parent[dst] == -1) {
         std::cout << dst;
         return;
     }
-    printPath(parent[dst], parent);
-    std::cout << " -> " << dst;
+    printPath(parent[dst], parent, os);
+    os << " -> " << dst;
 }
 
 int calculateEdges(int vertices, double density, bool directed) {
     return directed
-           ? static_cast<int>(density * vertices * (vertices - 1) / 100.0)
-           : static_cast<int>(density * vertices * (vertices - 1) / 200.0);
+           ? static_cast<int>((density * vertices * (vertices - 1) )/ 100.0)
+           : static_cast<int>((density * vertices * (vertices - 1) )/ 200.0);
 }
 
 int main(int argc, char* argv[]) {
@@ -104,7 +104,7 @@ int main(int argc, char* argv[]) {
             fin >> u >> v >> w;
             //undir for MST
             list.addEdge(u, v, w);
-            if (problem == 0) {
+            if (problem == MST) {
                 list.addEdge(v, u, w);
             }
             mat.addEdge(u, v, w);
@@ -123,11 +123,20 @@ int main(int argc, char* argv[]) {
         list.print();
         mat.print();
 
+        std::ofstream output;
+        if (!outputFile.empty()) {
+            output.open(outputFile, std::ios::app);
+            if (!output.is_open()) {
+                std::cerr << "Cannot open output file.\n";
+
+                return 1;
+            }
+        }
+        std::ostream& os = (output.is_open() ? output : std::cout);
+
         GraphReader readerListObj(list);
         GraphReader readerMatObj(mat);
         Timer timer;
-        std::ofstream out;
-        if (!outputFile.empty()) out.open(outputFile);
 
         if (problem == MST) {
             if (algorithm == ALLMST || algorithm == PRIM) {
@@ -145,8 +154,10 @@ int main(int argc, char* argv[]) {
                 int costMat = primMat.compute(parentMat);
                 timerMat.stop();
 
-                std::cout << "[Prim - List] MST cost:  " << costList << " Time:  " << timerList.result() << "ms\n";
-                std::cout << "[Prim - Matrix] MST cost:  " << costMat << " Time:  " << timerMat.result() << "ms\n";
+                os << "[Prim - List] MST cost: " << costList
+                   << " Time: " << timerList.result() << "ms\n";
+                os << "[Prim - Matrix] MST cost: " << costMat
+                   << " Time: " << timerMat.result() << "ms\n";
 
                 delete[] parentList;
                 delete[] parentMat;
@@ -181,8 +192,10 @@ int main(int argc, char* argv[]) {
                 int costMat = kruskalMat.compute(edgesMat, countMat);
                 timerMat.stop();
 
-                std::cout << "[Kruskal - List] MST cost:  " << costList << " Time:  " << timerList.result() << "ms\n";
-                std::cout << "[Kruskal - Matrix] MST cost:  " << costMat << " Time:  " << timerMat.result() << "ms\n";
+                os << "[Kruskal - List] MST cost: " << costList
+                   << " Time: " << timerList.result() << "ms\n";
+                os << "[Kruskal - Matrix] MST cost: " << costMat
+                   << " Time: " << timerMat.result() << "ms\n";
 
                 delete[] edgesList;
                 delete[] edgesMat;
@@ -209,11 +222,13 @@ int main(int argc, char* argv[]) {
                 dijMat.compute(start, distMat, parentMat);
                 timerMat.stop();
 
-                std::cout << "[Dijkstra - List] Distance =  " << distList[end] << " Time:  " << timerList.result() << "ms\nPath: ";
-                printPath(end, parentList); std::cout << "\n";
+                os << "[Dijkstra - List] Distance = " << distList[end]
+                   << " Time: " << timerList.result() << "ms Path: ";
+                printPath(end, parentList, os); os << "\n";
 
-                std::cout << "[Dijkstra - Matrix] Distance =  " << distMat[end] << " Time:  " << timerMat.result() << "ms\nPath: ";
-                printPath(end, parentMat); std::cout << "\n";
+                os << "[Dijkstra - Matrix] Distance = " << distMat[end]
+                   << " Time: " << timerMat.result() << "ms Path: ";
+                printPath(end, parentMat, os); os << "\n";
 
                 delete[] distList;
                 delete[] parentList;
@@ -238,19 +253,22 @@ int main(int argc, char* argv[]) {
                 bfMat.compute(start, distMat, parentMat);
                 timerMat.stop();
 
-                std::cout << "[Bellman-Ford - List] Distance =  " << distList[end] << " Time:  " << timerList.result() << "ms\nPath: ";
-                printPath(end, parentList); std::cout << "\n";
 
-                std::cout << "[Bellman-Ford - Matrix] Distance =  " << distMat[end] << " Time:  " << timerMat.result() << "ms\nPath: ";
-                printPath(end, parentMat); std::cout << "\n";
+                os << "[Bellman-Ford - List] Distance = " << distList[end]
+                   << " Time: " << timerList.result() << "ms Path: ";
+                printPath(end, parentList, os); os << "\n";
+
+                os << "[Bellman-Ford - Matrix] Distance = " << distMat[end]
+                   << " Time: " << timerMat.result() << "ms Path: ";
+                printPath(end, parentMat, os); os << "\n";
+
 
                 delete[] distList; delete[] parentList;
                 delete[] distMat; delete[] parentMat;
             }
         }
 
-
-        if (out.is_open()) out.close();
+        if (output.is_open()) output.close();
         return 0;
     }
 
@@ -268,7 +286,11 @@ int main(int argc, char* argv[]) {
         int count = std::stoi(argv[6]);
         std::string outFile = argv[7];
 
-        bool directed = (problem == 1);
+        bool directed;
+        if (problem == 0)       // MST
+            directed = false;
+        else                    // shortest path lub max flow
+            directed = true;
         int edges = calculateEdges(size, density, directed);
 
         DataWriter writer(outFile);

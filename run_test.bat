@@ -6,12 +6,12 @@ rem ------------------------------------------------------------
 
 
 set REPS=50
-set OUT=resultsALL.txt
+set OUT=resultsSP.txt
 
 REM Define sets of test configurations
 set PROBLEM=0 1
 set ALGS=0
-set SIZE=25 50 100 160 220 300 400
+set SIZE=15 30 50 75 100 125 150
 set DENSITY=25 50 99
 
  REM Remove old results file and add header line
